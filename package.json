@@ -1,12 +1,15 @@
 {
   "name": "process-fork-queue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A queue for limited process fork",
   "scripts": {
     "test": "jest",
     "start": "jest --watch",
     "build": "rollup -c ./rollup.config.js",
     "publish": "npm publish --registry=https://registry.npmjs.org/"
+  },
+  "repository": {
+    "url": "https://github.com/ExcitedSpider/process-fork-queue"
   },
   "author": "qiuyifeng1997@outlook.com",
   "license": "ISC",
