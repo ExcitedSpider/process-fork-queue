@@ -2,44 +2,38 @@ import { fork, ChildProcess } from "child_process";
 
 type ForkArgs = Parameters<typeof fork>;
 
-const removeProcessFromQueue = (
-  queue: ChildProcess[],
-  process: ChildProcess
-) => {
-  const index = queue.findIndex((p) => p === process);
-  if (index !== -1) {
-    queue.splice(index, 1);
-  }
-};
-
 export class ForkQueue {
   #maxLength = 10;
 
-  #prepareQueue: {
+  #watingQueue: {
     forkArgs: ForkArgs;
     resolve: (value: ChildProcess | PromiseLike<ChildProcess>) => void;
     reject: (reason: any) => void;
   }[] = [];
 
   #processQueue: ChildProcess[] = new Proxy([] as ChildProcess[], {
+    // arrow function to bind this
     set: (array, prop, value) => {
+      // When change length, threre might be a place for new process to launch
       if (
         prop === "length" &&
         value < this.#maxLength &&
-        this.#prepareQueue.length !== 0
+        this.#watingQueue.length !== 0
       ) {
-        const preapreItem = this.#prepareQueue.pop();
+        const preapreItem = this.#watingQueue.pop();
         if (preapreItem) {
           const cp = fork(...preapreItem.forkArgs);
+
           cp.on(
             "exit",
             removeProcessFromQueue.bind(null, this.#processQueue, cp)
           );
-
           preapreItem.resolve(cp);
           this.#processQueue.push(cp);
         }
       }
+
+      // default behavior
       array[prop as any] = value;
       return true;
     },
@@ -61,8 +55,9 @@ export class ForkQueue {
       this.#processQueue.push(process);
       return Promise.resolve(process);
     }
+    // if the queue is full push fork request to wating queue
     return new Promise((resolve, reject) => {
-      this.#prepareQueue.push({
+      this.#watingQueue.push({
         resolve,
         reject,
         forkArgs,
@@ -70,3 +65,13 @@ export class ForkQueue {
     });
   }
 }
+
+const removeProcessFromQueue = (
+  queue: ChildProcess[],
+  process: ChildProcess
+) => {
+  const index = queue.findIndex((p) => p === process);
+  if (index !== -1) {
+    queue.splice(index, 1);
+  }
+};
