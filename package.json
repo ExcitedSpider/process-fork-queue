@@ -1,11 +1,12 @@
 {
   "name": "process-fork-queue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A queue for limited process fork",
   "scripts": {
     "test": "jest",
     "start": "jest --watch",
-    "build": "rollup -c ./rollup.config.js"
+    "build": "rollup -c ./rollup.config.js",
+    "publish": "npm publish --registry=https://registry.npmjs.org/"
   },
   "author": "qiuyifeng1997@outlook.com",
   "license": "ISC",
