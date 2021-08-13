@@ -1,5 +1,5 @@
 {
-  "name": "fork-queue",
+  "name": "process-fork-queue",
   "version": "1.0.0",
   "description": "A queue for limited process fork",
   "scripts": {
@@ -9,6 +9,8 @@
   },
   "author": "qiuyifeng1997@outlook.com",
   "license": "ISC",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
