@@ -1,6 +1,6 @@
 {
   "name": "process-fork-queue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A queue for limited process fork",
   "scripts": {
     "test": "jest",
@@ -14,7 +14,11 @@
   "author": "qiuyifeng1997@outlook.com",
   "license": "ISC",
   "main": "lib/index.js",
-  "files": ["lib", "es", "src"],
+  "files": [
+    "lib",
+    "es",
+    "src"
+  ],
   "module": "es/index.js",
   "devDependencies": {
     "@babel/core": "^7.15.0",
