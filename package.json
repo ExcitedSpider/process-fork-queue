@@ -6,7 +6,7 @@
     "test": "jest",
     "start": "jest --watch",
     "build": "rollup -c ./rollup.config.js",
-    "publish": "npm publish --registry=https://registry.npmjs.org/"
+    "release": "npm publish --registry=https://registry.npmjs.org/"
   },
   "repository": {
     "url": "https://github.com/ExcitedSpider/process-fork-queue"
